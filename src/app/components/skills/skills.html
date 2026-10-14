@@ -1,0 +1,54 @@
+﻿<section id="skills" class="relative py-28 md:py-40">
+  <div class="mx-auto max-w-6xl px-6">
+    <app-section-heading index="02" label="Skills" title="A toolkit built for" accent="modern products." />
+  </div>
+
+  <!-- Infinite marquee -->
+  <div
+    class="relative mb-20 flex flex-col gap-4 [mask-image:linear-gradient(90deg,transparent,black_12%,black_88%,transparent)]"
+    aria-hidden="true"
+  >
+    <div class="flex w-max animate-marquee gap-4 hover:[animation-play-state:paused]">
+      @for (item of row; track $index) {
+        <span class="glass rounded-full px-6 py-3 font-display text-lg whitespace-nowrap text-white/80">{{ item }}</span>
+      }
+    </div>
+    <div class="flex w-max animate-marquee-reverse gap-4 hover:[animation-play-state:paused]">
+      @for (item of rowReversed; track $index) {
+        <span class="rounded-full border border-line px-6 py-3 font-display text-lg whitespace-nowrap text-muted">
+          {{ item }}
+        </span>
+      }
+    </div>
+  </div>
+
+  <!-- Skill groups -->
+  <div appReveal="stagger" class="mx-auto grid max-w-6xl gap-5 px-6 md:grid-cols-2">
+    @for (group of groups; track group.title; let i = $index) {
+      <article
+        [appTilt]="5"
+        class="glow-card group relative overflow-hidden rounded-3xl border border-line bg-white/[0.02] p-8"
+      >
+        <div
+          class="pointer-events-none absolute -top-24 -right-24 size-56 rounded-full opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-100"
+          [class]="glows[i % glows.length]"
+        ></div>
+        <div class="mb-6 flex items-center justify-between">
+          <span
+            class="grid size-12 place-items-center rounded-2xl bg-gradient-to-br from-violet/30 to-cyan/20 text-white ring-1 ring-white/10"
+          >
+            <app-icon [name]="group.icon" [size]="22" />
+          </span>
+          <span class="font-mono text-xs text-white/30">0{{ i + 1 }}</span>
+        </div>
+        <h3 class="font-display text-2xl font-semibold">{{ group.title }}</h3>
+        <p class="mt-2 text-muted">{{ group.description }}</p>
+        <ul class="mt-6 flex flex-wrap gap-2">
+          @for (item of group.items; track item) {
+            <li class="rounded-full bg-white/[0.05] px-3 py-1.5 text-sm text-white/80 ring-1 ring-white/5">{{ item }}</li>
+          }
+        </ul>
+      </article>
+    }
+  </div>
+</section>

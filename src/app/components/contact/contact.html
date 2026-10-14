@@ -1,0 +1,96 @@
+﻿<section id="contact" class="relative overflow-hidden py-28 md:py-40">
+  <div class="pointer-events-none absolute bottom-0 left-1/2 -z-10 size-[50rem] -translate-x-1/2 translate-y-1/2 rounded-full bg-violet/20 blur-[140px]"></div>
+
+  <div class="mx-auto max-w-6xl px-6">
+    <app-section-heading index="05" label="Contact" title="Have a project in mind?" accent="Let's talk." />
+
+    <div class="grid gap-12 lg:grid-cols-[1fr_1.1fr]">
+      <div appReveal="stagger" class="flex flex-col gap-6">
+        <p class="text-lg leading-relaxed text-muted">
+          I'm currently open to freelance work and full-time roles. Whether you have a question or just want to say hi,
+          my inbox is always open.
+        </p>
+
+        <button
+          type="button"
+          [appMagnetic]="0.15"
+          (click)="copyEmail()"
+          class="glass group flex w-fit items-center gap-4 rounded-2xl px-6 py-5 text-left transition-colors hover:bg-white/[0.06]"
+        >
+          <span class="grid size-12 place-items-center rounded-xl bg-gradient-to-br from-violet to-cyan text-white">
+            <app-icon name="mail" />
+          </span>
+          <span>
+            <span class="block text-xs tracking-wider text-muted uppercase">Email me</span>
+            <span class="font-display text-xl">{{ profile.email }}</span>
+          </span>
+          <app-icon [name]="copied() ? 'check' : 'copy'" [size]="18" class="ml-2 text-muted group-hover:text-white" />
+        </button>
+        <p class="h-5 text-sm text-emerald-400" aria-live="polite">{{ copied() ? 'Copied to clipboard!' : '' }}</p>
+
+        <ul class="flex flex-wrap gap-3" aria-label="Social links">
+          @for (s of profile.socials; track s.label) {
+            <li>
+              <a
+                [href]="s.url"
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm text-muted transition-colors hover:border-white/30 hover:text-white"
+              >
+                <app-icon [name]="s.icon" [size]="16" />
+                {{ s.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <form appReveal (ngSubmit)="send()" #f="ngForm" class="glow-card glass flex flex-col gap-5 rounded-3xl p-6 md:p-8">
+        <div class="grid gap-5 sm:grid-cols-2">
+          <label class="flex flex-col gap-2 text-sm text-muted">
+            Name
+            <input
+              name="name"
+              [(ngModel)]="form.name"
+              required
+              class="rounded-xl border border-line bg-white/[0.03] px-4 py-3 text-white outline-none transition-colors placeholder:text-white/25 focus:border-violet"
+              placeholder="Jane Doe"
+            />
+          </label>
+          <label class="flex flex-col gap-2 text-sm text-muted">
+            Email
+            <input
+              name="email"
+              type="email"
+              [(ngModel)]="form.email"
+              required
+              email
+              class="rounded-xl border border-line bg-white/[0.03] px-4 py-3 text-white outline-none transition-colors placeholder:text-white/25 focus:border-violet"
+              placeholder="jane@company.com"
+            />
+          </label>
+        </div>
+        <label class="flex flex-col gap-2 text-sm text-muted">
+          Message
+          <textarea
+            name="message"
+            rows="5"
+            [(ngModel)]="form.message"
+            required
+            class="resize-none rounded-xl border border-line bg-white/[0.03] px-4 py-3 text-white outline-none transition-colors placeholder:text-white/25 focus:border-violet"
+            placeholder="Tell me about your projectâ€¦"
+          ></textarea>
+        </label>
+        <button
+          type="submit"
+          [appMagnetic]="0.2"
+          [disabled]="f.invalid"
+          class="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan px-6 py-4 font-medium text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          Send message
+          <app-icon name="send" [size]="18" class="transition-transform group-hover:translate-x-1" />
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

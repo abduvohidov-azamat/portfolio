@@ -1,0 +1,88 @@
+﻿<!-- Scroll progress -->
+<div class="fixed inset-x-0 top-0 z-[70] h-0.5">
+  <div
+    class="h-full origin-left bg-gradient-to-r from-violet via-cyan to-pink"
+    [style.transform]="'scaleX(' + progress() + ')'"
+  ></div>
+</div>
+
+<header
+  class="fixed inset-x-0 top-0 z-50 px-4 transition-transform duration-500 ease-out"
+  [class.-translate-y-full]="hidden()"
+>
+  <nav
+    class="mx-auto mt-4 flex max-w-6xl items-center justify-between rounded-2xl px-4 py-3 transition-all duration-500 md:px-6"
+    [class.glass]="scrolled() || menuOpen()"
+    aria-label="Main"
+  >
+    <a href="#" (click)="go('top', $event)" class="group flex items-center gap-3" aria-label="Back to top">
+      <span
+        class="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-violet to-cyan font-display text-sm font-bold text-white shadow-lg shadow-violet/30 transition-transform duration-500 group-hover:rotate-[360deg]"
+      >
+        {{ profile.initials }}
+      </span>
+      <span class="hidden font-display font-medium tracking-tight sm:block">{{ profile.name }}</span>
+    </a>
+
+    <ul class="hidden items-center gap-1 md:flex">
+      @for (link of links; track link.id) {
+        <li>
+          <a
+            [href]="'#' + link.id"
+            (click)="go(link.id, $event)"
+            class="relative rounded-full px-4 py-2 text-sm transition-colors"
+            [class.text-white]="active() === link.id"
+            [class.text-muted]="active() !== link.id"
+            [attr.aria-current]="active() === link.id ? 'true' : null"
+          >
+            @if (active() === link.id) {
+              <span class="absolute inset-0 -z-10 rounded-full bg-white/[0.07]"></span>
+            }
+            {{ link.label }}
+          </a>
+        </li>
+      }
+    </ul>
+
+    <div class="flex items-center gap-2">
+      <a
+        appMagnetic
+        [href]="'#contact'"
+        (click)="go('contact', $event)"
+        class="hidden items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-ink transition-shadow hover:shadow-[0_0_30px_rgb(139_92_246/0.6)] sm:inline-flex"
+      >
+        Let's talk
+        <app-icon name="arrow" [size]="16" />
+      </a>
+      <button
+        type="button"
+        class="grid size-10 place-items-center rounded-xl border border-line md:hidden"
+        (click)="toggleMenu()"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="mobile-menu"
+        [attr.aria-label]="menuOpen() ? 'Close menu' : 'Open menu'"
+      >
+        <app-icon [name]="menuOpen() ? 'close' : 'menu'" />
+      </button>
+    </div>
+  </nav>
+
+  @if (menuOpen()) {
+    <div id="mobile-menu" class="glass mx-auto mt-2 max-w-6xl rounded-2xl p-4 md:hidden">
+      <ul class="flex flex-col">
+        @for (link of links; track link.id; let i = $index) {
+          <li>
+            <a
+              [href]="'#' + link.id"
+              (click)="go(link.id, $event)"
+              class="flex items-baseline gap-4 rounded-xl px-3 py-3 font-display text-2xl transition-colors hover:bg-white/5"
+            >
+              <span class="font-mono text-xs text-cyan">0{{ i + 1 }}</span>
+              {{ link.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  }
+</header>

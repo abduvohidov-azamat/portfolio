@@ -1,0 +1,16 @@
+@if (loading()) {
+  <app-loader (done)="onLoaded()" />
+}
+<app-cursor />
+<div class="grain" aria-hidden="true"></div>
+
+<app-nav />
+<main>
+  <app-hero />
+  <app-about />
+  <app-skills />
+  <app-experience />
+  <app-projects />
+  <app-contact />
+</main>
+<app-footer />

@@ -1,0 +1,36 @@
+﻿<section id="experience" class="relative mx-auto max-w-6xl px-6 py-28 md:py-40">
+  <app-section-heading index="03" label="Experience" title="Where I've been" accent="making an impact." />
+
+  <ol #timeline class="relative ml-3 md:ml-0">
+    <!-- Track + animated fill -->
+    <span class="absolute top-0 bottom-0 left-0 w-px bg-line md:left-1/2" aria-hidden="true"></span>
+    <span
+      class="timeline-fill absolute top-0 bottom-0 left-0 w-px origin-top bg-gradient-to-b from-violet via-cyan to-pink shadow-[0_0_12px_rgb(34_211_238/0.8)] md:left-1/2"
+      aria-hidden="true"
+    ></span>
+
+    @for (job of items; track job.company; let odd = $odd) {
+      <li class="relative pb-16 pl-10 last:pb-0 md:grid md:grid-cols-2 md:gap-16 md:pl-0">
+        <span
+          class="timeline-dot absolute top-1.5 left-0 z-10 size-3.5 -translate-x-1/2 rounded-full bg-cyan ring-4 ring-ink shadow-[0_0_20px_rgb(34_211_238/0.9)] md:left-1/2"
+          aria-hidden="true"
+        ></span>
+
+        <div class="mb-3 md:mb-0" [class]="odd ? 'md:order-2 md:text-left' : 'md:text-right'">
+          <p appReveal class="font-mono text-sm text-cyan">{{ job.period }}</p>
+          <p appReveal class="mt-1 font-display text-xl text-white/50">{{ job.company }}</p>
+        </div>
+
+        <div appReveal class="glow-card rounded-2xl border border-line bg-white/[0.02] p-6 md:p-8" [class]="odd ? 'md:order-1' : ''">
+          <h3 class="font-display text-2xl font-semibold">{{ job.role }}</h3>
+          <p class="mt-3 leading-relaxed text-muted">{{ job.description }}</p>
+          <ul class="mt-5 flex flex-wrap gap-2" aria-label="Technologies">
+            @for (t of job.tech; track t) {
+              <li class="rounded-md bg-violet/10 px-2.5 py-1 font-mono text-xs text-violet-300">{{ t }}</li>
+            }
+          </ul>
+        </div>
+      </li>
+    }
+  </ol>
+</section>

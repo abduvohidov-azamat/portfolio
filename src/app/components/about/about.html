@@ -1,0 +1,54 @@
+﻿<section id="about" class="relative mx-auto max-w-6xl px-6 py-28 md:py-40">
+  <app-section-heading index="01" label="About me" title="Designing with code," accent="engineering with taste." />
+
+  <div class="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
+    <!-- Portrait card -->
+    <div appReveal>
+      <div
+        appTilt
+        class="glow-card relative mx-auto aspect-[4/5] max-w-sm overflow-hidden rounded-3xl border border-line bg-ink-2"
+      >
+        <!-- Replace this block with <img src="me.jpg" class="size-full object-cover" alt="..."> -->
+        <div
+          class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgb(139_92_246/0.55),transparent_55%),radial-gradient(circle_at_80%_80%,rgb(34_211_238/0.4),transparent_50%),radial-gradient(circle_at_70%_30%,rgb(244_114_182/0.3),transparent_45%)]"
+        ></div>
+        <div class="absolute inset-0 grid place-items-center">
+          <span class="font-display text-[9rem] font-bold tracking-tighter text-white/90 mix-blend-overlay">
+            {{ profile.initials }}
+          </span>
+        </div>
+        <div class="absolute inset-0 animate-spin-slow opacity-40">
+          <div class="absolute top-1/2 left-1/2 size-[140%] -translate-1/2 rounded-full border border-dashed border-white/20"></div>
+        </div>
+        <div class="glass absolute inset-x-4 bottom-4 flex items-center justify-between rounded-2xl px-4 py-3 text-sm">
+          <span class="flex items-center gap-2 text-white/80">
+            <app-icon name="pin" [size]="16" class="text-cyan" />
+            {{ profile.location }}
+          </span>
+          <span class="font-mono text-xs text-muted">// based</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bio + stats -->
+    <div class="flex flex-col justify-center">
+      <div appReveal="stagger" class="space-y-6 text-lg leading-relaxed text-white/70">
+        @for (p of profile.bio; track $index) {
+          <p>{{ p }}</p>
+        }
+      </div>
+
+      <dl appReveal="stagger" class="mt-14 grid grid-cols-2 gap-4">
+        @for (stat of profile.stats; track stat.label) {
+          <div class="glow-card rounded-2xl border border-line bg-white/[0.02] p-6" [appTilt]="4">
+            <dt class="sr-only">{{ stat.label }}</dt>
+            <dd class="font-display text-4xl font-semibold tracking-tight md:text-5xl">
+              <span [attr.data-count]="stat.value">0</span><span class="text-gradient">{{ stat.suffix }}</span>
+            </dd>
+            <dd class="mt-2 text-sm text-muted">{{ stat.label }}</dd>
+          </div>
+        }
+      </dl>
+    </div>
+  </div>
+</section>
